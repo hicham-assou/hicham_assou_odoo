@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "helb_project",
+    'name': "estate",
     'summary': """Project for HELB Student""",
     'author': "My Company",
     'website': "http://www.yourcompany.com",
