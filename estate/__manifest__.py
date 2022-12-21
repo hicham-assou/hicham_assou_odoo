@@ -5,7 +5,8 @@
     'author': "My Company",
     'website': "http://www.yourcompany.com",
     'category': 'Uncategorized',
-    'version': '15.0.0.1',
+    'version': '16.0.0.1',
+    'licence': 'LGPL-3',
     'depends': ['base', 'sale_management', 'calendar', 'hr'],
     'data': ["views/res_groups.xml", "views/res_partner.xml", "views/sale_order.xml"]
 }
