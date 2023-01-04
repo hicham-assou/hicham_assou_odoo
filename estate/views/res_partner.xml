@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Ajoutez le champ "manager_level" au modèle "res.partner" -->
-        <record model="ir.model.fields" id="res_partner_manager_level">
-            <field name="name">Manager Level</field>
-            <field name="model">res.partner</field>
-            <field name="field_description">Manager Level</field>
-            <field name="ttype">integer</field>
-            <field name="default">0</field>
-        </record>
-       
+
     </data>
 </odoo>

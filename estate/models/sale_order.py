@@ -36,6 +36,17 @@ class SaleOrder(models.Model):
         ('cancel', 'Annulé'),
     ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
 
+    
+
+    def _check_required_manager_level(self):
+        # Vérifiez le montant de la commande et définissez le niveau de gestionnaire requis
+        if self.amount_total < 500:
+            self.required_manager_level = 0
+        elif self.amount_total > 500 and self.amount_total < 2000:
+            self.required_manager_level = 1
+        elif self.amount_total > 2000:
+            self.required_manager_level = 2
+
     def action_waiting_approval(self):
         # Mettez la commande de vente en attente d'approbation
         self.state = 'waiting_approval'
