@@ -56,3 +56,6 @@ class SaleOrder(models.Model):
                     'partner_ids': [(4, line.employee.id)],
                 })
 
+        if self.amount_total > 500:
+            self.state = 'waiting_approval'
+

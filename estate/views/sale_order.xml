@@ -16,7 +16,7 @@
             <button string="En attente d'approbation" name="action_waiting_approval" type="object" class="oe_highlight" />
         </xpath>
     </field>
-      
+
     </record>
   </data>
 </odoo>
