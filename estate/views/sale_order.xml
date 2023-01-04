@@ -11,6 +11,15 @@
           <field name="employee" required="1"/>
         </xpath>
       </field>
+
+                  <field name="name">sale.order.form.inherit</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+        <button string="En attente d'approbation" name="action_waiting_approval" type="object" class="oe_highlight" />
+    </field>
+
+  
     </record>
   </data>
 </odoo>
