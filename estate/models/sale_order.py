@@ -59,4 +59,10 @@ class SaleOrder(models.Model):
         if self.amount_total > 500:
             self.state = 'waiting_approval'
 
+        if self.env.user.manager_level > 1:
+            self.state = 'sent'
+
+    # L'utilisateur actuel est un gestionnaire de niveau 2 ou plus
+    # Faites quelque chose ici
+
 
