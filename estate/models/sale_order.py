@@ -60,12 +60,15 @@ class SaleOrder(models.Model):
             if line.employee:
                 start_datetime = fields.Datetime.to_string(line.training_date)
                 end_datetime = fields.Datetime.from_string(start_datetime) + timedelta(hours=10)
-                event = self.env['calendar.event'].create({
-                    'name': 'Formation - %s' % line.name,
-                    'start': start_datetime,
-                    'stop': end_datetime,
-                    'partner_ids': [(4, line.employee.id)],
-                })
+                try:
+                    event = self.env['calendar.event'].create({
+                        'name': 'Formation - %s' % line.name,
+                        'start': start_datetime,
+                        'stop': end_datetime,
+                        'partner_ids': [(4, line.employee.id)],
+                    })
+                except Exception as e:
+                    print("Erreur lors de la création de l'événement :", e)
 
         if self.amount_total > 500:
             self.state = 'waiting_approval'
