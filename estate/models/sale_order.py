@@ -59,3 +59,4 @@ class SaleOrder(models.Model):
         if self.amount_total > 500:
             self.state = 'waiting_approval'
 
+
