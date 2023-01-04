@@ -5,11 +5,7 @@ from estate.models.sale_order import SaleOrder
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
-
-    # Ajoutez un champ "approval_level" au modèle "res.partner" pour stocker le niveau d'approbation des partenaires
-    class Partner(models.Model):
-        _inherit = 'res.partner'
-        approval_level = fields.Integer(string='Approval Level', default=0)
+    approval_level = fields.Integer(string='Approval Level', default=0)
 
     # Ajoutez un champ "manager_level" au modèle "res.users" pour stocker le niveau de gestionnaire de chaque utilisateur
     class User(models.Model):
