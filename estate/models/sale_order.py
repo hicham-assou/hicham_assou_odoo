@@ -67,19 +67,19 @@ class SaleOrder(models.Model):
                     # utilise l'ID de l'utilisateur actuel ou définit False si tu ne veux pas d'événement dans le calendrier de quiconque
                     user_id = self.env.user.id
 
-                vals = {
-                    'name': 'Formation - %s' % line.name,
-                    'start': start_datetime,
-                    'stop': end_datetime,
-                    'partner_ids': [(4, line.employee_id.id)],
-                    'privacy': 'confidential',
-                    'user_id': user_id,
-                }
-                event = self.env['calendar.event'].create(vals)
-                if not event:
-                    raise ValueError("L'événement n'a pas été créé correctement !")
-                if event.partner_ids != [(4, line.employee_id.id)] != [(4, line.employee_id.id)]:
-                    raise ValueError("L'événement n'a pas été attribué correctement aux participants !")
+            vals = {
+                'name': 'Formation - %s' % line.name,
+                'start': start_datetime,
+                'stop': end_datetime,
+                'partner_ids': [(4, line.employee_id.id)],
+                'privacy': 'confidential',
+                'user_id': user_id,
+            }
+            event = self.env['calendar.event'].create(vals)
+            if not event:
+                raise ValueError("L'événement n'a pas été créé correctement !")
+            if event.partner_ids != [(4, line.employee_id.id)] != [(4, line.employee_id.id)]:
+                raise ValueError("L'événement n'a pas été attribué correctement aux participants !")
 
 
         if self.amount_total > 500:
