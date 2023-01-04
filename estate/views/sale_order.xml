@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <data>
-    <record model="ir.ui.view" id="sale_order_view_inherit">
-      <field name="name">sale.order.view.inherit1</field>
-      <field name="model">sale.order</field>
-      <field name="inherit_id" ref="sale.view_order_form" />
-      <field name="arch" type="xml">
-        <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='tax_id']" position="after">
-          <field name="training_date" />
-          <field name="employee" required="1"/>
-        </xpath>
-      </field>
-       <field name="arch" type="xml">
-        <xpath expr="//button[@name='action_confirm']" position="after">
-            <button string="En attente d'approbation" name="action_waiting_approval" type="object" class="oe_highlight" />
-        </xpath>
-    </field>
+    <data>
+        <record model="ir.ui.view" id="sale_order_view_inherit">
+            <field name="name">sale.order.view.inherit1</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='tax_id']"
+                       position="after">
+                    <field name="training_date"/>
+                    <field name="employee" required="1"/>
+                </xpath>
+            </field>
 
-    </record>
-  </data>
+
+        </record>
+    </data>
 </odoo>

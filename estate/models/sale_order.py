@@ -36,7 +36,7 @@ class SaleOrder(models.Model):
         ('cancel', 'Annulé'),
     ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
 
-    
+
 
     def _check_required_manager_level(self):
         # Vérifiez le montant de la commande et définissez le niveau de gestionnaire requis
@@ -70,8 +70,6 @@ class SaleOrder(models.Model):
         if self.amount_total > 500:
             self.state = 'waiting_approval'
 
-        if self.env.user.manager_level > 1:
-            self.state = 'sent'
 
     # L'utilisateur actuel est un gestionnaire de niveau 2 ou plus
     # Faites quelque chose ici
