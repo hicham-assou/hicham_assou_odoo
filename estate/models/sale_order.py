@@ -1,7 +1,7 @@
 from odoo import models, fields, api, exceptions
+from datetime import timedelta
 
-
-class SaleOrder(models.Model):
+"""class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     state = fields.Selection([
@@ -20,4 +20,20 @@ class SaleOrder(models.Model):
 
     def action_approve(self):
         # Approuvez la commande de vente
-        self.state = 'approved'
+        self.state = 'approved'"""
+
+
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+
+    def action_confirm(self):
+        for line in self.order_line:
+            if line.employee:
+                start_datetime = fields.Datetime.to_string(line.training_date)
+                end_datetime = fields.Datetime.from_string(start_datetime) + timedelta(hours=10)
+                event = self.env['calendar.event'].create({
+                    'name': 'Formation - %s' % line.name,
+                    'start': start_datetime,
+                    'stop': end_datetime,
+                    'partner_ids': [(4, line.employee.id)],
+                })
