@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Ajoutez le champ "approval_level" au modèle "res.partner" -->
-        <record model="ir.model.fields" id="res_partner_approval_level">
-            <field name="name">Approval Level</field>
-            <field name="model">res.partner</field>
-            <field name="field_description">Approval Level</field>
-            <field name="ttype">integer</field>
-            <field name="default">0</field>
-        </record>
-        <!-- Ajoutez le champ "approval_level" à la vue de formulaire de partenaire -->
-        <record model="ir.ui.view" id="res_partner_form_inherit">
-            <field name="name">res.partner.form.inherit</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_partner_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page/field[@name='contact_ids']" position="after">
-                    <field name="approval_level"/>
-                </xpath>
-            </field>
-        </record>
+
     </data>
 </odoo>
