@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Ajoutez le nouveau groupe d'utilisateur ici -->
-        <record model="res.groups" id="group_manager_level">
-            <field name="name">Manager Level</field>
-            <field name="category_id" ref="base.module_category_human_resources"/>
-            <field name="manager_level">1</field>
-        </record>
+
     </data>
 </odoo>
