@@ -38,7 +38,7 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             if line.employee:
                 start_datetime = fields.Datetime.to_string(line.training_date)
-                end_datetime = fields.Datetime.from_string(start_datetime) + timedelta(hours=24)
+                end_datetime = fields.Datetime.from_string(start_datetime) + timedelta(hours=10)
                 if line.employee.user_id:
                     user_id = line.employee.user_id.id
                 else:
@@ -49,6 +49,7 @@ class SaleOrder(models.Model):
                     'start': start_datetime,
                     'stop': end_datetime,
                     'partner_ids': [(4, line.employee.id)],
+                    'privacy': 'confidential',
                     'user_id': user_id,
                 }
                 event = self.env['calendar.event'].create(vals)
