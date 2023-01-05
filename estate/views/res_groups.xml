@@ -2,14 +2,17 @@
 <odoo>
     <data>
         <record model="ir.ui.view" id="res_users_form_inherit">
-            <field name="name">res.users.form.inherit</field>
-            <field name="model">res.users</field>
-            <field name="inherit_id" ref="base.view_users_form"/>
-            <field name="arch" type="xml">
-                <field name="groups_id" position="after">
-                    <field name="manager_level"/>
-                </field>
-            </field>
+            <xpath expr="page[@name='pg']/group[@name='gp']/field" position="inside">
+                <field name="description"/>
+            </xpath>
+
+            <field name="res_id" position="after"/>
+
+            <div name="name" position="replace">
+                <div name="name2">
+                    <field name="name2"/>
+                </div>
+            </div>
         </record>
     </data>
 </odoo>
