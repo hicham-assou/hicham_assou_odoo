@@ -8,6 +8,9 @@
             <field name="arch" type="xml">
                 <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='tax_id']"
                        position="after">
+                    <button name="action_approve" type="object" string="Approuver" class="btn-primary"
+        attrs="{'invisible': [('state', 'not in', ['waiting_approval'])]}"/>
+
                     <field name="training_date"/>
                     <field name="employee" required="1"/>
                 </xpath>
