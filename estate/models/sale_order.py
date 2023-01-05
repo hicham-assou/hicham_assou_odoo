@@ -55,8 +55,8 @@ class SaleOrder(models.Model):
         # Approuvez la commande de vente
         self.state = 'approved'
 
-    def event_in_calendar(self):
-        result = super(SaleOrder, self).event_in_calendar()
+    def action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
         for line in self.order_line:
             if line.employee:
                 start_datetime = fields.Datetime.to_string(line.training_date)
@@ -71,11 +71,10 @@ class SaleOrder(models.Model):
                     'start': start_datetime,
                     'stop': end_datetime,
                     'partner_ids': [(4, line.employee.id)],
-                    'privacy': 'public',
                     'user_id': user_id,
                 }
                 event = self.env['calendar.event'].create(values)
-                
+
 
         if self.amount_total > 500:
             self.state = 'waiting_approval'
