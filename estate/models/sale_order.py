@@ -60,7 +60,7 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             if line.employee:
                 start_datetime = fields.Datetime.to_string(line.training_date)
-                end_datetime = fields.Datetime.from_string(start_datetime) + timedelta(hours=24)
+                end_datetime = fields.Datetime.from_string(start_datetime) + timedelta(hours=12)
                 if line.employee.user_id:
                     user_id = line.employee.user_id.id
                 else:
