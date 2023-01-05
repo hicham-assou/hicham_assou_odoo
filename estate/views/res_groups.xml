@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record model="ir.ui.view" id="res_users_form_inherit">
-            <xpath expr="page[@name='pg']/group[@name='gp']/field" position="inside">
-                <field name="description"/>
-            </xpath>
 
-            <field name="res_id" position="after"/>
 
-            <div name="name" position="replace">
-                <div name="name2">
-                    <field name="name2"/>
-                </div>
-            </div>
-        </record>
     </data>
 </odoo>
