@@ -55,30 +55,26 @@ class SaleOrder(models.Model):
         # Approuvez la commande de vente
         self.state = 'approved'
 
-    def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
+    def event_in_calendar(self):
+        result = super(SaleOrder, self).event_in_calendar()
         for line in self.order_line:
             if line.employee:
                 start_datetime = fields.Datetime.to_string(line.training_date)
-                end_datetime = fields.Datetime.from_string(start_datetime) + timedelta(hours=8)
+                end_datetime = fields.Datetime.from_string(start_datetime) + timedelta(hours=24)
                 if line.employee.user_id:
                     user_id = line.employee.user_id.id
                 else:
                     user_id = self.env.user.id
 
-                vals = {
+                values = {
                     'name': '%s' % line.name,
                     'start': start_datetime,
                     'stop': end_datetime,
                     'partner_ids': [(4, line.employee.id)],
-                    # Utilisez le champ partner_ids pour ajouter des participants
-                    'privacy': 'confidential',
                     'user_id': user_id,
                 }
-                event = self.env['calendar.event'].create(vals)
-                if not event:
-                    raise ValueError("L'événement n'a pas été créé correctement !")
-
+                event = self.env['calendar.event'].create(values)
+                
         if self.amount_total > 500:
             self.state = 'waiting_approval'
 
