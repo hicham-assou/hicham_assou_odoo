@@ -1,28 +1,6 @@
 from odoo import models, fields, api, exceptions
 from datetime import timedelta
 
-"""class SaleOrder(models.Model):
-    _inherit = 'sale.order'
-
-    state = fields.Selection([
-        ('draft', 'Brouillon'),
-        ('waiting_approval', 'En attente d\'approbation'),
-        ('approved', 'Approuvé'),
-        ('sent', 'Devis envoyé'),
-        ('sale', 'Vente'),
-        ('done', 'Terminé'),
-        ('cancel', 'Annulé'),
-    ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
-
-    def action_waiting_approval(self):
-        # Mettez la commande de vente en attente d'approbation
-        self.state = 'waiting_approval'
-
-    def action_approve(self):
-        # Approuvez la commande de vente
-        self.state = 'approved'"""
-
-
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
@@ -55,29 +33,25 @@ class SaleOrder(models.Model):
         # Approuvez la commande de vente
         self.state = 'approved'
 
-    def action_confirm(self):
+    def create_event_in_calendar(self):
         res = super(SaleOrder, self).action_confirm()
         for line in self.order_line:
             if line.employee:
                 start_datetime = fields.Datetime.to_string(line.training_date)
-                end_datetime = fields.Datetime.from_string(start_datetime) + timedelta(hours=8)
+                end_datetime = fields.Datetime.from_string(start_datetime) + timedelta(hours=24)
                 if line.employee.user_id:
                     user_id = line.employee.user_id.id
                 else:
                     user_id = self.env.user.id
 
                 vals = {
-                    'name': 'Formation - %s' % line.name,
+                    'name': '%s' % line.name,
                     'start': start_datetime,
                     'stop': end_datetime,
                     'partner_ids': [(4, line.employee.id)],
-                    # Utilisez le champ partner_ids pour ajouter des participants
-                    'privacy': 'confidential',
                     'user_id': user_id,
                 }
                 event = self.env['calendar.event'].create(vals)
-                if not event:
-                    raise ValueError("L'événement n'a pas été créé correctement !")
 
         if self.amount_total > 500:
             self.state = 'waiting_approval'
