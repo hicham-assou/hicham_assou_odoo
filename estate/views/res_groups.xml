@@ -7,17 +7,17 @@
         </record>
 
         <record id="manager_level_1" model="res.groups">
-            <field name="name" >Manager Level 1</field>
+            <field name="Manager Level 1" >Manager Level 1</field>
             <field name="category_id" ref="management_group_category"/>
         </record>
 
         <record id="manager_level_2" model="res.groups">
-            <field name="name" >Manager Level 2</field>
+            <field name="Manager Level 2" >Manager Level 2</field>
             <field name="category_id" ref="management_group_category"/>
         </record>
 
         <record id="manager_level_3" model="res.groups">
-            <field name="name" >Manager Level 3</field>
+            <field name="Manager Level 3" >Manager Level 3</field>
             <field name="category_id" ref="management_group_category"/>
         </record>
 
