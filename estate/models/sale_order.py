@@ -31,24 +31,7 @@ class SaleOrder(models.Model):
             else:
                 raise exceptions.ValidationError("Vous n'avez pas le droit")
 
-        self.state = 'approved'
 
-
-"""
-        # Vérification que le niveau de gestionnaire de l'utilisateur est suffisant pour approuver la commande de vente
-        if self.amount_total < 500:
-            pass
-        elif self.amount_total >= 500 and self.amount_total < 2000:
-            if self.env.user in management_level_1_group.users:
-                self.state = 'waiting_approval'
-                raise exceptions.ValidationError(
-                    "Vous n'avez pas le niveau de gestionnaire requis pour approuver cette commande de vente")
-        elif self.amount_total >= 2000:
-            if self.env.user in management_level_2_group.users:
-                self.state = 'waiting_approval'
-                raise exceptions.ValidationError(
-                    "Vous n'avez pas le niveau de gestionnaire requis pour approuver cette commande de vente")
-"""
 
 
 def action_confirm(self):
