@@ -34,7 +34,16 @@ class SaleOrder(models.Model):
         management_level_2_group = self.env['res.groups.management_group_category'].sudo().search([('name', '=', 'Manager Level 2'), ('active', '=', True)])
         management_level_3_group = self.env['res.groups.management_group_category'].sudo().search([('name', '=', 'Manager Level 3'), ('active', '=', True)])
 
+        manager_level_1_group = self.env['res.groups'].sudo().search([('name', '=', 'Manager Level 1')])
+        if self.env.user in manager_level_1_group.users:
+            raise exceptions.ValidationError(
+                "SAAALAAAAAAAAAAAAAAAAAAAAAAAMM")
 
+        # Approuvez la commande de vente
+        self.state = 'approved'
+
+
+"""
         # Vérification que le niveau de gestionnaire de l'utilisateur est suffisant pour approuver la commande de vente
         if self.amount_total < 500:
             pass
@@ -48,10 +57,10 @@ class SaleOrder(models.Model):
                 self.state = 'waiting_approval'
                 raise exceptions.ValidationError(
                     "Vous n'avez pas le niveau de gestionnaire requis pour approuver cette commande de vente")
-        # Approuvez la commande de vente
-        self.state = 'approved'
+"""
 
-    def action_confirm(self):
+
+def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
 
         for line in self.order_line:
@@ -75,7 +84,6 @@ class SaleOrder(models.Model):
         self.action_approve()
 
         #if self.amount_total > 500:
-        #    self.state = 'waiting_approval'
-#
+        #    self.state = 'waiting_approval'#
         #    if self.user_has_groups('base.manager'):
          #       self._set_state("done")
