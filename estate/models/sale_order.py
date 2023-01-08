@@ -30,9 +30,9 @@ class SaleOrder(models.Model):
 
     def action_approve(self):
 
-        management_level_1_group = self.env['res.groups'].sudo().search([('name', '=', 'Manager Level 1')])
-        management_level_2_group = self.env['res.groups'].sudo().search([('name', '=', 'Manager Level 2')])
-        management_level_3_group = self.env['res.groups'].sudo().search([('name', '=', 'Manager Level 3')])
+        management_level_1_group = self.env['res.groups'].sudo().search([('name', '=', 'Manager Level 1'), ('active', '=', True)])
+        management_level_2_group = self.env['res.groups'].sudo().search([('name', '=', 'Manager Level 2'), ('active', '=', True)])
+        management_level_3_group = self.env['res.groups'].sudo().search([('name', '=', 'Manager Level 3'), ('active', '=', True)])
 
 
         # Vérification que le niveau de gestionnaire de l'utilisateur est suffisant pour approuver la commande de vente
