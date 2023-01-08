@@ -48,6 +48,7 @@ class SaleOrder(models.Model):
 
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
+
         for line in self.order_line:
             if line.employee:
                 start_datetime = fields.Datetime.to_string(line.training_date)
@@ -66,6 +67,12 @@ class SaleOrder(models.Model):
                 }
                 event = self.env['calendar.event'].create(values)
 
+        if self.state == "draft" and self.user_has_groups('base.manager'):
+            self._set_state("done")
+
 
         if self.amount_total > 500:
             self.state = 'waiting_approval'
+
+            if self.state == "waiting_approval" and self.user_has_groups('base.manager'):
+                self._set_state("done")
