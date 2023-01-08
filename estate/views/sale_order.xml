@@ -11,7 +11,10 @@
                     <field name="training_date"/>
                     <field name="employee" required="1"/>
                 </xpath>
+
             </field>
         </record>
+
+
     </data>
 </odoo>

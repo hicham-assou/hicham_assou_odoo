@@ -82,6 +82,7 @@ def action_confirm(self):
                 }
                 event = self.env['calendar.event'].create(values)
 
+        self._check_required_manager_level()
         self.action_approve()
 
         #if self.amount_total > 500:
