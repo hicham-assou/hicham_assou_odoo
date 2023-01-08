@@ -3,31 +3,23 @@ from datetime import timedelta
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
+    required_manager_level = fields.Integer(string='Required Manager Level')
 
-    state = fields.Selection([
-        ('draft', 'Brouillon'),
-        ('waiting_approval', 'En attente d\'approbation'),
-        ('approved', 'Approuvé'),
-        ('sent', 'Devis envoyé'),
-        ('sale', 'Vente'),
-        ('done', 'Terminé'),
-        ('cancel', 'Annulé'),
-    ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
-
-
-    def _check_required_manager_level(self):
-        # Vérifiez le montant de la commande et définissez le niveau de gestionnaire requis
-        if self.amount_total < 500:
-            self.required_manager_level = 0
-        elif self.amount_total > 500 and self.amount_total < 2000:
-            self.required_manager_level = 1
-        elif self.amount_total > 2000:
-            self.required_manager_level = 2
 
     def action_waiting_approval(self):
         # Mettez la commande de vente en attente d'approbation
         self.state = 'waiting_approval'
 
+    def _check_required_manager_level(self):
+        # Vérifiez le montant de la commande et définissez le niveau de gestionnaire requis
+        if self.amount_total < 500:
+            self.required_manager_level = 0
+        elif self.amount_total < 2000:
+            self.required_manager_level = 1
+        elif self.amount_total < 5000:
+            self.required_manager_level = 2
+        else:
+            self.required_manager_level = 3
     def action_approve(self):
 
         # Récupérez les groupes de gestionnaire de niveau 1, 2 et 3
@@ -38,15 +30,17 @@ class SaleOrder(models.Model):
         management_level_3_group = self.env['res.groups'].sudo().search(
             [('name', '=', 'Manager Level 3'), ('category_id.name', '=', 'Management Level Category')])
 
-        # Vérifiez si l'utilisateur en cours appartient à l'un des groupes de gestionnaire
-        if self.env.user in management_level_1_group.users:
-            raise exceptions.ValidationError("Vous êtes manager level 1")
-        elif self.env.user in management_level_2_group.users:
-            raise exceptions.ValidationError("Vous êtes manager level 2")
-        elif self.env.user in management_level_3_group.users:
-            raise exceptions.ValidationError("Vous êtes manager level 3")
+        # Vérifiez si l'utilisateur en cours appartient au groupe de gestionnaire requis
+        if self.required_manager_level == 1 and self.env.user not in management_level_1_group.users:
+            raise exceptions.ValidationError(
+                "Vous n'avez pas le niveau de gestionnaire requis pour approuver cette commande")
+        elif self.required_manager_level == 2 and self.env.user not in management_level_2_group.users:
+            raise exceptions.ValidationError(
+                "Vous n'avez pas le niveau de gestionnaire requis pour approuver cette commande")
+        elif self.required_manager_level == 3 and self.env.user not in management_level_3_group.users:
+            raise exceptions.ValidationError("Vous n'avez pas le niveau de gestionnaire requis pour approuver cette commande")
 
-        # Approuvez la commande de vente
+
         self.state = 'approved'
 
 
