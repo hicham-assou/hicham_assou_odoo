@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        
+
+        <record id="management_group_category" model="ir.module.category">
+                <field name="name">Management Level</field>
+        </record>
+
+        <record id="manager_level_1" model="res.groups">
+            <field name="name" >Manager Level 1</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
     </data>
 </odoo>
