@@ -30,14 +30,21 @@ class SaleOrder(models.Model):
 
     def action_approve(self):
 
-        management_level_1_group = self.env['res.groups.management_group_category'].sudo().search([('name', '=', 'Manager Level 1'), ('active', '=', True)])
-        management_level_2_group = self.env['res.groups.management_group_category'].sudo().search([('name', '=', 'Manager Level 2'), ('active', '=', True)])
-        management_level_3_group = self.env['res.groups.management_group_category'].sudo().search([('name', '=', 'Manager Level 3'), ('active', '=', True)])
+        # Récupérez les groupes de gestionnaire de niveau 1, 2 et 3
+        management_level_1_group = self.env['res.groups'].sudo().search(
+            [('name', '=', 'Manager Level 1'), ('category_id.name', '=', 'Management Level Category')])
+        management_level_2_group = self.env['res.groups'].sudo().search(
+            [('name', '=', 'Manager Level 2'), ('category_id.name', '=', 'Management Level Category')])
+        management_level_3_group = self.env['res.groups'].sudo().search(
+            [('name', '=', 'Manager Level 3'), ('category_id.name', '=', 'Management Level Category')])
 
-        manager_level_1_group = self.env['res.groups'].sudo().search([('name', '=', 'Manager Level 1')])
-        if self.env.user in manager_level_1_group.users:
-            raise exceptions.ValidationError(
-                "SAAALAAAAAAAAAAAAAAAAAAAAAAAMM")
+        # Vérifiez si l'utilisateur en cours appartient à l'un des groupes de gestionnaire
+        if self.env.user in management_level_1_group.users:
+            raise exceptions.ValidationError("Vous êtes manager level 1")
+        elif self.env.user in management_level_2_group.users:
+            raise exceptions.ValidationError("Vous êtes manager level 2")
+        elif self.env.user in management_level_3_group.users:
+            raise exceptions.ValidationError("Vous êtes manager level 3")
 
         # Approuvez la commande de vente
         self.state = 'approved'
